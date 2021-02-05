@@ -51,28 +51,6 @@ class WeightedVote(AbstractEnsembleVote):
                           weights=self._weights)
         
 
-class RandomForestMetaLearner(AbstractEnsembleVote):
-    '''
-    Meta Learner for Random Forests
-    '''
-    def __init__(self):
-        pass
-
-    def fit(self, train, y=None):
-        self._rgr = RandomForestRegressor()
-        print('RF trains using shape ', train.T.shape)
-        self._rgr.fit(X=train.T, y=y)
-
-    def predict(self, exog):
-        '''
-        Parameters:
-        ------
-        exog - numpy.array. matrix of predictions 
-               from ensemble of models
-        '''
-        print('RF predicts using shape exog.T ', exog.T.shape )
-        return self._rgr.predict(exog.T)
-
 
 class Ensemble(object):
     '''
