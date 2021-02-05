@@ -1,8 +1,6 @@
 import numpy as np
 import pandas as pd
 from abc import ABC, abstractmethod
-from sklearn.ensemble import RandomForestRegressor
-
 
 class AbstractEnsembleVote(ABC):
 
@@ -52,9 +50,10 @@ class WeightedVote(AbstractEnsembleVote):
         
 
 
-class Ensemble(object):
+class Ensemble:
     '''
-    BANANA!
+    Encapsulates a set of forecasting models and a meta learner (e.g. 
+    simple average or weighted average) that combines them.
     '''
     def __init__(self, estimators, meta_learner, include_exog=False, 
                  rescale_preds=False):
@@ -102,9 +101,6 @@ class Ensemble(object):
             x_train = np.concatenate([preds, x_train.T]).T
         else:
             x_train = np.array(preds)
-
-
-        #print('fit shape ', x_train.shape)
 
         self._vote.fit(x_train, y=y_train)
         
