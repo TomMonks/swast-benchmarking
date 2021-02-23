@@ -1,5 +1,21 @@
-## library(fpp2)
-library(Rssa)
+## Time series cross validation: Singular Spectrum Analysis
+## Analysis conducted using Rssa version 1.0.2. and R 3.6.1
+## r-base, r-forecast and r-svd dependencies managed via conda 
+
+
+######## cran dependency management ############################################
+
+rssaURL = 'https://cran.r-project.org/src/contrib/Archive/Rssa/Rssa_1.0.2.tar.gz'
+
+#load Rssa if installed and return result (TRUE = loaded, FALSE not loaded.)
+rssaInstalled = require('Rssa')
+if(!rssaInstalled)
+{
+  ##install version 1.0.2 of Rssa
+  install.packages(rssaURL, repos=NULL, type='source')
+  library('Rssa')
+}
+################################################################################
 
 #check working directory...
 getwd()
@@ -43,10 +59,11 @@ lines(actual, col='green')
 #retrain on each data set
 origin <-seq(1279, 1279+549-max_horizon, 7)
 max_horizon <- 365
-levels <- c(0.80, 0.95) #run tscv twice.
+levels <- c(0.80, 0.95)
 n_boots <- 20
 eigentriples <- 14
 
+#run tscv twice.
 for (level in levels)
 {
   for (i in origin)
@@ -71,7 +88,7 @@ for (level in levels)
     #point forecast and predition intervals save to DF
     cv_data = data.frame(f$mean, f$lower, f$upper, val_ts)
     
-    #save df to file.
+    #save df to file ssa sub-directory
     write.csv(cv_data, paste('ssa/cv_', i, '.csv', sep=""))
   }
 }
