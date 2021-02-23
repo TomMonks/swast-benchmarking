@@ -1,5 +1,11 @@
-library(fpp2)
+## library(fpp2)
 library(Rssa)
+
+#check working directory...
+getwd()
+
+## read r-formatted data from file...
+ts_r <- read.csv("./data/ts_r.csv", header=FALSE)
 
 ## Create a daily Date object - helps my work on dates
 inds <- seq(as.Date("2013-12-30"), as.Date("2019-07-28"), by = "day")
@@ -37,33 +43,36 @@ lines(actual, col='green')
 #retrain on each data set
 origin <-seq(1279, 1279+549-max_horizon, 7)
 max_horizon <- 365
-level <- 0.80  #test for 80% and 90% PIs
+levels <- c(0.80, 0.95) #run tscv twice.
 n_boots <- 20
 eigentriples <- 14
 
-for (i in origin)
+for (level in levels)
 {
-  yr <- as.numeric(substring(inds[i], 1, 4))
-  yr_val <- as.numeric(substring(inds[i+1], 1, 4))
-  print(i)
-  
-  cv_ts <- ts(ts_r$V2[1:i],     
-             start = c(yr, as.numeric(format(inds[i], "%j"))),
-             frequency = 365)
-  
-  val_ts <- ts(ts_r$V2[(i+1):(i+max_horizon)],
-               start = c(yr_val, as.numeric(format(inds[i+1], "%j"))),
+  for (i in origin)
+  {
+    yr <- as.numeric(substring(inds[i], 1, 4))
+    yr_val <- as.numeric(substring(inds[i+1], 1, 4))
+    print(i)
+    
+    cv_ts <- ts(ts_r$V2[1:i],     
+               start = c(yr, as.numeric(format(inds[i], "%j"))),
                frequency = 365)
-  
-  #SSA analysis
-  s <- ssa(cv_ts)
-  f <- forecast(s, groups = list(1:eigentriples), method = "recurrent", 
-                interval='prediction', level=level, R=n_boots, len=max_horizon)
-  
-  #point forecast and predition intervals save to DF
-  cv_data = data.frame(f$mean, f$lower, f$upper, val_ts)
-  
-  #save df to file.
-  write.csv(cv_data, paste('ssa/cv_', i, '.csv', sep=""))
+    
+    val_ts <- ts(ts_r$V2[(i+1):(i+max_horizon)],
+                 start = c(yr_val, as.numeric(format(inds[i+1], "%j"))),
+                 frequency = 365)
+    
+    #SSA analysis
+    s <- ssa(cv_ts)
+    f <- forecast(s, groups = list(1:eigentriples), method = "recurrent", 
+                  interval='prediction', level=level, R=n_boots, len=max_horizon)
+    
+    #point forecast and predition intervals save to DF
+    cv_data = data.frame(f$mean, f$lower, f$upper, val_ts)
+    
+    #save df to file.
+    write.csv(cv_data, paste('ssa/cv_', i, '.csv', sep=""))
+  }
 }
 
