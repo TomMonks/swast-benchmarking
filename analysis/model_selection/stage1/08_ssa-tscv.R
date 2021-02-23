@@ -88,8 +88,8 @@ for (level in levels)
     #point forecast and predition intervals save to DF
     cv_data = data.frame(f$mean, f$lower, f$upper, val_ts)
     
-    #save df to file ssa sub-directory
-    write.csv(cv_data, paste('ssa/cv_', i, '.csv', sep=""))
+    #save df to file ssa sub-directory for relevant PI.
+    write.csv(cv_data, paste('ssa', level * 100, '_PI/cv_', i, '.csv', sep=""))
   }
 }
 
