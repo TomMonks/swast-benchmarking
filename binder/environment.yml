@@ -6,12 +6,17 @@ dependencies:
   - fbprophet=0.5
   - jupyterlab=1.2.6
   - nbconvert=5.6.1
+  - nbformat=5.1.2
   - pip=20.0.2
   - plotly=4.3.0
   - python=3.7.5
+  - r-base=3.6.1
+  - r-forecast=8.6
+  - r-svd=0.5
   - statsmodels=0.11.0
   - pip:
     - forecast-tools==0.1.5
+    - nbclient==0.5.2
     - numpy==1.19.5
     - pandas==1.2.1
     - pmdarima==1.5.2
