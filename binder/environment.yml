@@ -1,7 +1,7 @@
 name: ambo_benchmark
 channels:
-  - conda-forge
   - defaults
+  - conda-forge
 dependencies:
   - fbprophet=0.5
   - jupyterlab=1.2.6
@@ -12,7 +12,6 @@ dependencies:
   - python=3.7.5
   - r-base=3.6.1
   - r-forecast=8.6
-  - r-svd=0.5
   - statsmodels=0.11.0
   - pip:
     - forecast-tools==0.1.5
