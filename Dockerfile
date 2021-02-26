@@ -9,6 +9,9 @@ WORKDIR /home/code
 # Copy all files across to container
 COPY . /home/code
 
+# Copy jupyter config file
+COPY ./docker/jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
+
 # Install anaconda, conda-forge and pip dependencies
 RUN conda env create -f binder/environment.yml && conda clean -afy --yes
 
