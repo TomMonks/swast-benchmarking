@@ -60,9 +60,13 @@ swast_benchmarking
 
 # Steps to reproduce the results reported in the paper.
 
-Use the environment `ambo_benchmark` detailed in `binder/environment.yml`.  
+**Options:**
+1. Use conda to install the provided virtual environment on your local machine
+2. Use a docker image containing all of the code and the virtual environment.
+ 
+## Option 1: Install a local conda environment:
 
-## Installation of conda environment:
+Use the environment `ambo_benchmark` detailed in `binder/environment.yml`. 
 
 The analysis is written in a mix of standard Python (3.x) and modern data science libraries. It is recommended that users first install 'Anaconda'. Anaconda includes 'conda' (a package manager).
 
@@ -85,7 +89,44 @@ To activate the enviroment run the following command:
 conda activate ambo_benchmark
 ```
 
+Then launch Jupyter-lab
+
+```
+jupyter-lab 
+```
+
 More help on environments can be found here: https://conda.io/docs/user-guide/tasks/manage-environments.html
+
+
+## Option 2: Use the Docker image
+
+You will need `docker` installed on your local machine from https://www.docker.com/products/docker-desktop
+
+> linux users can install: `sudo apt-get install docker.io`
+
+To build the image.  Open a terminal in the repo's directory and issue the following commands:
+
+```
+# build the image (takes 3 - 5 minutes)
+docker build --tag swast-benchmark .
+
+# launch the image in interactive mode; map local port 8080->80 on image
+docker run -it -p 8080:80 --name swast_docker swast-benchmark
+
+```  
+
+Your terminal will now be in the local docker image.  Issue the following commands
+
+```
+# switches to the ambo_benchmark virtual environment
+conda activate ambo_benchmark 
+
+# launch jupyter lab. Defaults are no-browser; port=80; ip=0.0.0.0
+jupyter-lab
+```
+Open the browser on your local machine enter the following address
+
+* `localhost:8080` (Juypter lab opens in the repo's directory)
 
 ## Quickly recreate the tables, charts and figures in the paper:
 
