@@ -18,6 +18,7 @@ if(!rssaInstalled)
 ################################################################################
 
 #check working directory...
+#code assumes call from swast-benchmarking/
 getwd()
 
 ## read r-formatted data from file...
@@ -57,8 +58,8 @@ lines(actual, col='green')
 #** Cross Validation.
 #create forecasts using rolling forecast origin
 #retrain on each data set
-origin <-seq(1279, 1279+549-max_horizon, 7)
 max_horizon <- 365
+origin <-seq(1279, 1279+549-max_horizon, 7)
 levels <- c(0.80, 0.95)
 n_boots <- 20
 eigentriples <- 14
@@ -89,7 +90,8 @@ for (level in levels)
     cv_data = data.frame(f$mean, f$lower, f$upper, val_ts)
     
     #save df to file ssa sub-directory for relevant PI.
-    write.csv(cv_data, paste('ssa', level * 100, '_PI/cv_', i, '.csv', sep=""))
+    stage1 = './analysis/model_selection/stage1'
+    write.csv(cv_data, paste(stage1, '/ssa/', level * 100, '_PI/cv_', i, '.csv', sep=""))
   }
 }
 
