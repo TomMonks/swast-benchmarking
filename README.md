@@ -24,7 +24,6 @@ These results are recorded via time series cross validation.  These can be found
 
 ```
 swast_benchmarking
-├── LICENSE
 ├── analysis
 │   ├── benchmark
 │   |   ├── 00_ensemble-tscv-parallel.ipynb
@@ -39,6 +38,11 @@ swast_benchmarking
 │   ├── environment.yml
 ├── data
 │   ├── [2 x.csv; inc. 1 x R formatted time series.]
+├── docker
+│   ├── install_rssa.R
+│   ├── jupyter_notebook_config.py
+├── Dockerfile
+├── LICENSE
 ├── paper
 │   ├── appendix
 │   ├── figures
@@ -46,14 +50,17 @@ swast_benchmarking
 ├── results
 │   ├── benchmark
 │   |   ├── [.csv]
+│   ├── external_validation
+│   |   ├── [.csv]
 │   ├── model_selection
 │   |   ├── stage1
 │   │   |   ├── [.csv]
 │   |   ├── stage1
 │   │   |   ├── [.csv]
-│   ├── benchmark_summary.ipynb
-│   ├── summary_stage_1.ipynb
-│   ├── summary_stage_2.ipynb
+│   ├── 01_summary_stage_1.ipynb
+│   ├── 02_summary_stage_2.ipynb
+│   ├── 03_benchmark_summary.ipynb
+│   ├── 04_summary_external_validation.ipynb
 ├── README.md
 └── results_summary_main.ipynb
 ```
