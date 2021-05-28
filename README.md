@@ -109,14 +109,31 @@ More help on environments can be found here: https://conda.io/docs/user-guide/ta
 
 You will need `docker` installed on your local machine from https://www.docker.com/products/docker-desktop
 
-> linux users can install: `sudo apt-get install docker.io`
+* linux users can install: `sudo apt-get install docker.io`
+* Mac OS users can install docker desktop: https://docs.docker.com/docker-for-mac/install/
+* Windows user can install docker desktop via WSL2: https://docs.docker.com/docker-for-windows/install/ 
 
-To build the image.  Open a terminal in the repo's directory and issue the following commands:
+### Option 2.1: Pull the image from dockerhub
+
+* A pre-built docker image containing the code and data is available from dockerhub.
+* https://hub.docker.com/r/tommonks01/swast-benchmark/
+
+```
+docker pull tommonks01/swast-benchmark:latest
+```
+
+### Option 2.2: Build the image
+
+Alternatively you can build the image locally. Open a terminal in the repo's directory and issue the following commands:
 
 ```
 # build the image (takes 3 - 5 minutes)
 docker build --tag swast-benchmark .
+```
 
+### Running the image
+
+```
 # launch the image in interactive mode; map local port 8080->80 on image
 docker run -it -p 8080:80 --name swast_docker swast-benchmark
 
